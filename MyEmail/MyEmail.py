@@ -2,6 +2,7 @@
 # encoding: utf-8
 
 import smtplib
+import commands
 import os
 from socket import timeout
 from email.mime.multipart import MIMEMultipart
