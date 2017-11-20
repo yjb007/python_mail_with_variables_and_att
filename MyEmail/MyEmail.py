@@ -35,10 +35,15 @@ class myEmail(object):
         att1["Content-Disposition"] = 'attachment; filename=%s' %(os.path.basename(file1),)
 
 	#读取邮件内容
-	message = '''{0}'''.format(commands.getoutput('cat %s' %(message,)))
-	
+	try:
+	    mailcontent = '''{0}'''.format(commands.getoutput('cat %s' %(message,)))
+	except Exception, e:
+	    ret['result'] = False
+	    ret['comment'].append(str(e))
+	    return ret
+
         msg = MIMEMultipart()
-        content = MIMEText(message, _subtype='plain', _charset='utf-8')
+        content = MIMEText(mailcontent, _subtype='plain', _charset='utf-8')
         msg.attach(content)
 	msg.attach(att1)
         msg['To'] = to
